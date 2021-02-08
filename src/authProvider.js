@@ -6,7 +6,6 @@ export default {
     let data = await axiosClient.post('/auth/login', { email: username, password });
 
     if (data.user.role === 0) {
-      localStorage.setItem('role', 'admin');
       localStorage.removeItem('not_authenticated');
       localStorage.setItem('login', 'admin');
       localStorage.setItem('admin-token', data.token);
@@ -22,7 +21,6 @@ export default {
   },
   logout: () => {
     localStorage.setItem('not_authenticated', true);
-    localStorage.removeItem('role');
     localStorage.removeItem('admin-token');
     localStorage.removeItem('login');
     localStorage.removeItem('user');
