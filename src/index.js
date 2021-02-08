@@ -5,15 +5,15 @@ import { render } from 'react-dom';
 import { Route } from 'react-router-dom';
 
 import authProvider from './authProvider';
-import comments from './comments';
+import comments from './views/comments';
 import CustomRouteLayout from './customRouteLayout';
 import CustomRouteNoLayout from './customRouteNoLayout';
 import dataProvider from './dataProvider';
 import i18nProvider from './i18nProvider';
 import Layout from './Layout';
-import posts from './posts';
-import users from './users';
-import tags from './tags';
+import posts from './views/posts';
+import users from './views/users';
+import tags from './views/tags';
 
 render(
   <Admin
