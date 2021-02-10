@@ -1,12 +1,15 @@
 import * as actions from './actions';
 
-const initialState = {};
+const initialState = {
+  user: null,
+};
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.SET_THREEBOX:
+    case actions.LOGIN:
       return {
         ...state,
+        user: action.user,
       };
     default:
       return state;
