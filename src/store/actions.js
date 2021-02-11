@@ -9,6 +9,5 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
 
 export const authLogin = () => async (dispatch) => {
   let data = await axiosClient.get('/auth');
-  console.log(data);
   if (data.user) dispatch({ type: LOGIN, user: data.user });
 };

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import '@coreui/coreui/scss/coreui.scss';
 import { authLogin } from 'store/actions';
+import '@coreui/coreui/scss/coreui.scss';
+import 'App.css';
 
 const loading = (
   <div className='pt-3 text-center'>
@@ -38,7 +39,7 @@ export default function App() {
           <Route exact path='/login' name='Login Page' render={(props) => <Login {...props} />} />
           <Route path='/404' name='Page 404' render={(props) => <Page404 {...props} />} />
           <Route exact path='/500' name='Page 500' render={(props) => <Page500 {...props} />} />
-          {!!user ? <Route exact path='/' name='Home' component={TheLayout} /> : <></>}
+          {!!user ? <Route path='/' name='Home' component={TheLayout} /> : <></>}
         </Switch>
       </React.Suspense>
     </BrowserRouter>
