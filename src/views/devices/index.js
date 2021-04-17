@@ -108,8 +108,10 @@ export default function Devices() {
         <CModalBody>
           <CLabel>Type Id</CLabel>
           <CSelect onChange={(e) => setTypeId(e.target.value)}>
-            {deviceType.map((type) => (
-              <option value={type.typeId}>{type.typeId}</option>
+            {deviceType.map((type, index) => (
+              <option key={index} value={type.typeId}>
+                {type.typeId}
+              </option>
             ))}
           </CSelect>
 

@@ -12,15 +12,16 @@ import {
   CModalFooter,
   CLabel,
   CInput,
+  CSelect,
 } from '@coreui/react';
 import { useEffect, useState } from 'react';
 import axiosClient from 'api';
 import { setDeviceType } from 'store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const fields = ['typeId', 'description', 'createdAt', 'Action', 'Command'];
+const fields = ['typeId', 'description', 'createdAt', 'Action', 'Feature'];
 
-const commandFields = ['command', 'description', 'Action'];
+const commandFields = ['name', 'command', 'description', 'Action'];
 
 export default function DeviceType() {
   const [data, setData] = useState();
@@ -28,13 +29,13 @@ export default function DeviceType() {
   const [details, setDetails] = useState([]);
   const [newModal, setNewModal] = useState(false);
   const [modal, setModal] = useState(false);
-  const [commands, setCommands] = useState([]);
-  const [command, setCommand] = useState();
-  const [description, setDescription] = useState();
+  const [features, setFeatures] = useState([]);
+  const [func, setFunc] = useState();
 
   const [typeId, setTypeId] = useState('');
   const [newDescription, setNewDescription] = useState('');
 
+  const { functions } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const getDevice = async () => {
@@ -53,19 +54,19 @@ export default function DeviceType() {
   }, [setData, dispatch]);
 
   const addDeviceType = async () => {
-    let res = await axiosClient.post('/device-type', { typeId, newDescription });
+    let res = await axiosClient.post('/device-type', { typeId, description: newDescription });
     if (res.status === 200) {
       getDevice();
       newToggle();
     }
   };
 
-  const getCommands = async (typeId) => {
+  const getFeatures = async (typeId) => {
     try {
-      let data = await axiosClient.get(`/device-type/allCommand/${typeId}`);
+      let data = await axiosClient.get(`/device-type/allFeature/${typeId}`);
 
-      setCurrentDeviceType(data[0].typeId);
-      setCommands(data[0].commands);
+      setCurrentDeviceType(data.typeId);
+      setFeatures(data.functions);
     } catch (error) {
       console.log(error);
     }
@@ -77,8 +78,8 @@ export default function DeviceType() {
     if (position !== -1) {
       newDetails.splice(position, 1);
     } else {
-      getCommands(typeId);
-      newDetails = [...details, index];
+      getFeatures(typeId);
+      newDetails = [index];
     }
     setDetails(newDetails);
   };
@@ -91,30 +92,30 @@ export default function DeviceType() {
     setNewModal(!newModal);
   };
 
-  // const addCommand = async () => {
-  //   try {
-  //     let res = await axiosClient.post('/command', {
-  //       deviceTypeId: currentDeviceType,
-  //       command,
-  //       description,
-  //     });
-  //     if (res.status === 200) {
-  //       getCommands(currentDeviceType);
-  //       toggle();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const addFunction = async () => {
+    try {
+      let data = {
+        deviceTypeId: currentDeviceType,
+        functionId: func,
+      };
+      let res = await axiosClient.post('/feature', data);
+      if (res.status === 200) {
+        getFeatures(currentDeviceType);
+        toggle();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const deleteCommand = async (id) => {
-  //   try {
-  //     await axiosClient.delete(`/command/${id}`);
-  //     getCommands(currentDeviceType);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const deleteCommand = async (id) => {
+    try {
+      await axiosClient.delete(`/feature/${id}`);
+      getFeatures(currentDeviceType);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -145,7 +146,7 @@ export default function DeviceType() {
                     </td>
                   </>
                 ),
-                Command: (item, index) => (
+                Feature: (item, index) => (
                   <>
                     <td>
                       <CButton
@@ -153,11 +154,11 @@ export default function DeviceType() {
                         shape='pill'
                         className='btn-sm'
                         color='primary'
-                        // onClick={() => {
-                        //   toggleDetails(index, item.typeId);
-                        // }}
+                        onClick={() => {
+                          toggleDetails(index, item.typeId);
+                        }}
                       >
-                        Command
+                        Feature
                       </CButton>
                     </td>
                   </>
@@ -170,7 +171,7 @@ export default function DeviceType() {
                           Add new Device
                         </CButton>
                         <CDataTable
-                          items={commands}
+                          items={features}
                           fields={commandFields}
                           hover
                           striped
@@ -180,14 +181,13 @@ export default function DeviceType() {
                           scopedSlots={{
                             Action: (item) => (
                               <>
-                                {console.log(item)}
                                 <td>
                                   <CButton
                                     block
                                     shape='pill'
                                     className='btn-sm'
                                     color='danger'
-                                    // onClick={() => deleteCommand(item.id)}
+                                    onClick={() => deleteCommand(item.Feature.id)}
                                   >
                                     Delete
                                   </CButton>
@@ -230,20 +230,17 @@ export default function DeviceType() {
       <CModal show={modal} onClose={toggle}>
         <CModalHeader closeButton>Register Device</CModalHeader>
         <CModalBody>
-          <CLabel>Command</CLabel>
-          <CInput
-            placeholder='Please enter deviceId'
-            onChange={(e) => setCommand(e.target.value)}
-          />
-
-          <CLabel>Description</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
+          <CLabel>Select Function</CLabel>
+          <CSelect onChange={(e) => setFunc(e.target.value)}>
+            {functions.map((funs, index) => (
+              <option key={index} value={funs.id}>
+                {funs.name}
+              </option>
+            ))}
+          </CSelect>
         </CModalBody>
         <CModalFooter>
-          <CButton
-            color='primary'
-            // onClick={() => addCommand()}
-          >
+          <CButton color='primary' onClick={() => addFunction()}>
             Add
           </CButton>
           <CButton color='secondary' onClick={toggle}>

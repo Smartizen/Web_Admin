@@ -22,3 +22,8 @@ export const DEVICE_TYPE = 'DEVICE_TYPE';
 export const setDeviceType = (deviceType) => async (dispatch) => {
   dispatch({ type: DEVICE_TYPE, deviceType });
 };
+
+export const FUNCTIONS = 'FUNCTIONS';
+export const setFunctions = (functions) => async (dispatch) => {
+  dispatch({ type: FUNCTIONS, functions });
+};

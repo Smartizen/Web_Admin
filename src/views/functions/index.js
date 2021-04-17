@@ -14,6 +14,8 @@ import {
 } from '@coreui/react';
 import { useEffect, useState } from 'react';
 import axiosClient from 'api';
+import { useDispatch } from 'react-redux';
+import { setFunctions } from 'store/actions';
 
 const fields = ['id', 'name', 'command', 'description', 'Action'];
 
@@ -26,9 +28,12 @@ export default function Functions() {
   const [command, setCommand] = useState(null);
   const [description, setDescription] = useState(null);
 
+  const dispatch = useDispatch();
+
   const getFunctions = async () => {
     let data = await axiosClient.get('/function');
     setData(data);
+    dispatch(setFunctions(data));
   };
 
   const setNull = () => {
@@ -40,6 +45,7 @@ export default function Functions() {
 
   useEffect(() => {
     getFunctions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setData]);
 
   const toggle = () => {
