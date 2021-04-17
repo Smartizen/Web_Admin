@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   user: null,
+  deviceType: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
+      };
+    case actions.DEVICE_TYPE:
+      return {
+        ...state,
+        deviceType: action.deviceType,
       };
     default:
       return state;

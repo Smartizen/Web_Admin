@@ -15,73 +15,50 @@ import {
 } from '@coreui/react';
 import { useEffect, useState } from 'react';
 import axiosClient from 'api';
+import { setDeviceType } from 'store/actions';
+import { useDispatch } from 'react-redux';
 
 const fields = ['typeId', 'description', 'createdAt', 'Action', 'Command'];
 
 const commandFields = ['command', 'description', 'Action'];
 
-// const usersData = [
-//   { id: 0, name: 'John Doe', registered: '2018/01/01', role: 'Guest', status: 'Pending' },
-//   { id: 1, name: 'Samppa Nori', registered: '2018/01/01', role: 'Member', status: 'Active' },
-//   { id: 2, name: 'Estavan Lykos', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-//   { id: 3, name: 'Chetan Mohamed', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-//   { id: 4, name: 'Derick Maximinus', registered: '2018/03/01', role: 'Member', status: 'Pending' },
-//   { id: 5, name: 'Friderik Dávid', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-//   { id: 6, name: 'Yiorgos Avraamu', registered: '2018/01/01', role: 'Member', status: 'Active' },
-//   { id: 7, name: 'Avram Tarasios', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-//   { id: 8, name: 'Quintin Ed', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-//   { id: 9, name: 'Enéas Kwadwo', registered: '2018/03/01', role: 'Member', status: 'Pending' },
-//   { id: 10, name: 'Agapetus Tadeáš', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-//   { id: 11, name: 'Carwyn Fachtna', registered: '2018/01/01', role: 'Member', status: 'Active' },
-//   { id: 12, name: 'Nehemiah Tatius', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-//   { id: 13, name: 'Ebbe Gemariah', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-//   {
-//     id: 14,
-//     name: 'Eustorgios Amulius',
-//     registered: '2018/03/01',
-//     role: 'Member',
-//     status: 'Pending',
-//   },
-//   { id: 15, name: 'Leopold Gáspár', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-//   { id: 16, name: 'Pompeius René', registered: '2018/01/01', role: 'Member', status: 'Active' },
-//   { id: 17, name: 'Paĉjo Jadon', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-//   {
-//     id: 18,
-//     name: 'Micheal Mercurius',
-//     registered: '2018/02/01',
-//     role: 'Admin',
-//     status: 'Inactive',
-//   },
-//   {
-//     id: 19,
-//     name: 'Ganesha Dubhghall',
-//     registered: '2018/03/01',
-//     role: 'Member',
-//     status: 'Pending',
-//   },
-//   { id: 20, name: 'Hiroto Šimun', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-//   { id: 21, name: 'Vishnu Serghei', registered: '2018/01/01', role: 'Member', status: 'Active' },
-//   { id: 22, name: 'Zbyněk Phoibos', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-//   { id: 23, name: 'Aulus Agmundr', registered: '2018/01/01', role: 'Member', status: 'Pending' },
-//   { id: 42, name: 'Ford Prefect', registered: '2001/05/25', role: 'Alien', status: "Don't panic!" },
-// ];
-
 export default function DeviceType() {
   const [data, setData] = useState();
   const [currentDeviceType, setCurrentDeviceType] = useState();
   const [details, setDetails] = useState([]);
+  const [newModal, setNewModal] = useState(false);
   const [modal, setModal] = useState(false);
   const [commands, setCommands] = useState([]);
   const [command, setCommand] = useState();
   const [description, setDescription] = useState();
 
+  const [typeId, setTypeId] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+
+  const dispatch = useDispatch();
+
+  const getDevice = async () => {
+    let data = await axiosClient.get('/device-type');
+    setData(data);
+    dispatch(setDeviceType(data));
+  };
+
   useEffect(() => {
     const getDevice = async () => {
       let data = await axiosClient.get('/device-type');
       setData(data);
+      dispatch(setDeviceType(data));
     };
     getDevice();
-  }, [setData]);
+  }, [setData, dispatch]);
+
+  const addDeviceType = async () => {
+    let res = await axiosClient.post('/device-type', { typeId, newDescription });
+    if (res.status === 200) {
+      getDevice();
+      newToggle();
+    }
+  };
 
   const getCommands = async (typeId) => {
     try {
@@ -110,36 +87,45 @@ export default function DeviceType() {
     setModal(!modal);
   };
 
-  const addCommand = async () => {
-    try {
-      let res = await axiosClient.post('/command', {
-        deviceTypeId: currentDeviceType,
-        command,
-        description,
-      });
-      if (res.status === 200) {
-        getCommands(currentDeviceType);
-        toggle();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const newToggle = () => {
+    setNewModal(!newModal);
   };
 
-  const deleteCommand = async (id) => {
-    try {
-      await axiosClient.delete(`/command/${id}`);
-      getCommands(currentDeviceType);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const addCommand = async () => {
+  //   try {
+  //     let res = await axiosClient.post('/command', {
+  //       deviceTypeId: currentDeviceType,
+  //       command,
+  //       description,
+  //     });
+  //     if (res.status === 200) {
+  //       getCommands(currentDeviceType);
+  //       toggle();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const deleteCommand = async (id) => {
+  //   try {
+  //     await axiosClient.delete(`/command/${id}`);
+  //     getCommands(currentDeviceType);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
       <CCol xs='12' lg='12'>
         <CCard>
-          <CCardHeader>Device Type Table</CCardHeader>
+          <CCardHeader className='between'>
+            <strong>Device Type Table</strong>
+            <CButton color='success' onClick={newToggle}>
+              Add new Device Type
+            </CButton>
+          </CCardHeader>
           <CCardBody>
             <CDataTable
               items={data}
@@ -167,9 +153,9 @@ export default function DeviceType() {
                         shape='pill'
                         className='btn-sm'
                         color='primary'
-                        onClick={() => {
-                          toggleDetails(index, item.typeId);
-                        }}
+                        // onClick={() => {
+                        //   toggleDetails(index, item.typeId);
+                        // }}
                       >
                         Command
                       </CButton>
@@ -201,7 +187,7 @@ export default function DeviceType() {
                                     shape='pill'
                                     className='btn-sm'
                                     color='danger'
-                                    onClick={() => deleteCommand(item.id)}
+                                    // onClick={() => deleteCommand(item.id)}
                                   >
                                     Delete
                                   </CButton>
@@ -221,6 +207,26 @@ export default function DeviceType() {
       </CCol>
 
       {/* Modal */}
+      <CModal show={newModal} onClose={newToggle}>
+        <CModalHeader closeButton>Add Function</CModalHeader>
+        <CModalBody>
+          <CLabel>Type ID</CLabel>
+          <CInput placeholder='Please enter Type ID' onChange={(e) => setTypeId(e.target.value)} />
+
+          <CLabel>Description</CLabel>
+          <CInput placeholder='Description' onChange={(e) => setNewDescription(e.target.value)} />
+        </CModalBody>
+        <CModalFooter>
+          <CButton color='primary' onClick={() => addDeviceType()}>
+            Submit
+          </CButton>
+          <CButton color='secondary' onClick={newToggle}>
+            Cancel
+          </CButton>
+        </CModalFooter>
+      </CModal>
+
+      {/* Modal */}
       <CModal show={modal} onClose={toggle}>
         <CModalHeader closeButton>Register Device</CModalHeader>
         <CModalBody>
@@ -234,7 +240,10 @@ export default function DeviceType() {
           <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
         </CModalBody>
         <CModalFooter>
-          <CButton color='primary' onClick={() => addCommand()}>
+          <CButton
+            color='primary'
+            // onClick={() => addCommand()}
+          >
             Add
           </CButton>
           <CButton color='secondary' onClick={toggle}>

@@ -15,8 +15,9 @@ import {
 } from '@coreui/react';
 import { useEffect, useState } from 'react';
 import axiosClient from 'api';
+import { useSelector } from 'react-redux';
 
-const fields = ['id', 'deviceId', 'typeId', 'description', 'createdAt', 'Action'];
+const fields = ['id', 'deviceId', 'typeId', 'description', 'authToken', 'Action'];
 
 export default function Devices() {
   const [data, setData] = useState();
@@ -24,8 +25,8 @@ export default function Devices() {
   const [typeId, setTypeId] = useState();
   const [deviceId, setDeviceId] = useState();
   const [description, setDescription] = useState();
-  const [price, setPrice] = useState();
-  const [discount, setDiscount] = useState();
+
+  const { deviceType } = useSelector((state) => state);
 
   const getDevice = async () => {
     let data = await axiosClient.get('/device');
@@ -41,7 +42,8 @@ export default function Devices() {
   };
 
   const registerDevice = async () => {
-    let res = await axiosClient.post('/device', { typeId, deviceId, description, price, discount });
+    console.log({ typeId, deviceId, description });
+    let res = await axiosClient.post('/device', { typeId, deviceId, description });
     if (res.status === 200) {
       getDevice();
       toggle();
@@ -106,9 +108,9 @@ export default function Devices() {
         <CModalBody>
           <CLabel>Type Id</CLabel>
           <CSelect onChange={(e) => setTypeId(e.target.value)}>
-            <option value='test2'>test2</option>
-            <option value='2'>Two</option>
-            <option value='3'>Three</option>
+            {deviceType.map((type) => (
+              <option value={type.typeId}>{type.typeId}</option>
+            ))}
           </CSelect>
 
           <CLabel>Device Id</CLabel>
@@ -119,12 +121,6 @@ export default function Devices() {
 
           <CLabel>Description</CLabel>
           <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
-
-          <CLabel>Price</CLabel>
-          <CInput placeholder='Price' onChange={(e) => setPrice(parseInt(e.target.value))} />
-
-          <CLabel>Discount</CLabel>
-          <CInput placeholder='Discount' onChange={(e) => setDiscount(parseInt(e.target.value))} />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => registerDevice()}>
