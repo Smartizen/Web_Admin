@@ -119,6 +119,8 @@ import {
   cilX,
   cilXCircle,
   cilWarning,
+  cilAccountLogout,
+  cilAppsSettings,
 } from '@coreui/icons';
 
 export const icons = Object.assign(
@@ -127,6 +129,8 @@ export const icons = Object.assign(
     sygnet,
   },
   {
+    cilAccountLogout,
+    cilAppsSettings,
     cilAlignCenter,
     cilAlignLeft,
     cilAlignRight,

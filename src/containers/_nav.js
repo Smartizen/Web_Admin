@@ -20,6 +20,12 @@ const _nav = [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Functions',
+    to: '/functions',
+    icon: 'cil-apps-settings',
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Device',
     to: '/devices',
     icon: <CIcon name='cil-speedometer' customClasses='c-sidebar-nav-icon' />,
