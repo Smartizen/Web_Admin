@@ -24,7 +24,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const login = () => {
+  const login = async () => {
     dispatch(adminLogin({ email, password }));
   };
 

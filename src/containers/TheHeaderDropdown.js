@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CBadge,
   CDropdown,
@@ -7,11 +7,24 @@ import {
   CDropdownToggle,
   CImg,
 } from '@coreui/react';
+import { Redirect } from 'react-router-dom';
 import CIcon from '@coreui/icons-react';
+import { logoutAccount } from 'store/actions';
+import { useDispatch } from 'react-redux';
 
 const TheHeaderDropdown = () => {
+  const dispatch = useDispatch();
+  const [redirect, setRedirect] = useState(null);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    dispatch(logoutAccount());
+    setRedirect('./');
+  };
+
   return (
     <CDropdown inNav className='c-header-nav-items mx-2' direction='down'>
+      {redirect ? <Redirect to={redirect} /> : <></>}
       <CDropdownToggle className='c-header-nav-link' caret={false}>
         <div className='c-avatar'>
           <CImg
@@ -79,9 +92,9 @@ const TheHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
-          <CIcon name='cil-lock-locked' className='mfe-2' />
-          Lock Account
+        <CDropdownItem onClick={() => logout()}>
+          <CIcon name='cil-account-logout' className='mfe-2' />
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
