@@ -37,6 +37,10 @@ export default function Devices() {
     getDevice();
   }, [setData]);
 
+  useEffect(() => {
+    setTypeId(deviceType[0].typeId);
+  }, [deviceType]);
+
   const toggle = () => {
     setModal(!modal);
   };

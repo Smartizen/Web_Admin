@@ -38,6 +38,10 @@ export default function DeviceType() {
   const { functions } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setFunc(functions[0].id);
+  }, [functions]);
+
   const getDevice = async () => {
     let data = await axiosClient.get('/device-type');
     setData(data);

@@ -144,10 +144,13 @@ export default function Functions() {
         <CModalHeader closeButton>Add Function</CModalHeader>
         <CModalBody>
           <CLabel>Name</CLabel>
-          <CInput placeholder='Please enter deviceId' onChange={(e) => setName(e.target.value)} />
+          <CInput
+            placeholder='Please enter name function'
+            onChange={(e) => setName(e.target.value)}
+          />
 
           <CLabel>Command</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setCommand(e.target.value)} />
+          <CInput placeholder='Command ( Optional )' onChange={(e) => setCommand(e.target.value)} />
 
           <CLabel>Description</CLabel>
           <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />

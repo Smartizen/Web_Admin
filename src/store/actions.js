@@ -11,7 +11,15 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
 
 export const authLogin = () => async (dispatch) => {
   let data = await axiosClient.get('/auth');
-  if (data.user && data.user.role === 0) dispatch({ type: LOGIN, user: data.user });
+  if (data.user && data.user.role === 0) {
+    dispatch({ type: LOGIN, user: data.user });
+    // get data
+    let deviceType = await axiosClient.get('/device-type');
+    dispatch(setDeviceType(deviceType));
+
+    let functions = await axiosClient.get('/function');
+    dispatch(setFunctions(functions));
+  }
 };
 
 export const logoutAccount = () => async (dispatch) => {
