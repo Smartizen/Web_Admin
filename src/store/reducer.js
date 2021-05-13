@@ -2,7 +2,8 @@ import * as actions from './actions';
 
 const initialState = {
   user: null,
-  deviceType: [],
+  watsonDeviceType: [],
+  smartizenDeviceType: [],
   functions: [],
 };
 
@@ -13,10 +14,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
       };
-    case actions.DEVICE_TYPE:
+    case actions.WATSON_DEVICE_TYPE:
       return {
         ...state,
-        deviceType: action.deviceType,
+        watsonDeviceType: action.watsonDeviceType,
+      };
+    case actions.SMARTIZEN_DEVICE_TYPE:
+      return {
+        ...state,
+        smartizenDeviceType: action.smartizenDeviceType,
       };
     case actions.FUNCTIONS:
       return {

@@ -14,8 +14,11 @@ export const authLogin = () => async (dispatch) => {
   if (data.user && data.user.role === 0) {
     dispatch({ type: LOGIN, user: data.user });
     // get data
-    let deviceType = await axiosClient.get('/device-type');
-    dispatch(setDeviceType(deviceType));
+    let watsonDeviceType = await axiosClient.get('/device-type/watson');
+    dispatch(setWatsonDeviceType(watsonDeviceType));
+
+    let smartizenDeviceType = await axiosClient.get('/device-type/smartizen');
+    dispatch(setSmartizenDeviceType(smartizenDeviceType));
 
     let functions = await axiosClient.get('/function');
     dispatch(setFunctions(functions));
@@ -26,9 +29,14 @@ export const logoutAccount = () => async (dispatch) => {
   dispatch({ type: LOGIN, user: null });
 };
 
-export const DEVICE_TYPE = 'DEVICE_TYPE';
-export const setDeviceType = (deviceType) => async (dispatch) => {
-  dispatch({ type: DEVICE_TYPE, deviceType });
+export const WATSON_DEVICE_TYPE = 'WATSON_DEVICE_TYPE';
+export const setWatsonDeviceType = (watsonDeviceType) => async (dispatch) => {
+  dispatch({ type: WATSON_DEVICE_TYPE, watsonDeviceType });
+};
+
+export const SMARTIZEN_DEVICE_TYPE = 'SMARTIZEN_DEVICE_TYPE';
+export const setSmartizenDeviceType = (smartizenDeviceType) => async (dispatch) => {
+  dispatch({ type: SMARTIZEN_DEVICE_TYPE, smartizenDeviceType });
 };
 
 export const FUNCTIONS = 'FUNCTIONS';
