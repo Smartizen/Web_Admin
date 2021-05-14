@@ -214,7 +214,7 @@ export default function SmartizenDeviceType() {
 
       {/* Modal */}
       <CModal show={newModal} onClose={newToggle}>
-        <CModalHeader closeButton>Add Function</CModalHeader>
+        <CModalHeader closeButton>Register DeviceType of Smartizen platform</CModalHeader>
         <CModalBody>
           <CLabel>Type ID</CLabel>
           <CInput placeholder='Please enter Type ID' onChange={(e) => setTypeId(e.target.value)} />
@@ -234,7 +234,7 @@ export default function SmartizenDeviceType() {
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Register Device</CModalHeader>
+        <CModalHeader closeButton>Add Function</CModalHeader>
         <CModalBody>
           <CLabel>Select Function</CLabel>
           <CSelect onChange={(e) => setFunc(e.target.value)}>

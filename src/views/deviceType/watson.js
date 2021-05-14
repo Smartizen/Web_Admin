@@ -213,7 +213,7 @@ export default function WatsonDeviceType() {
 
       {/* Modal */}
       <CModal show={newModal} onClose={newToggle}>
-        <CModalHeader closeButton>Add Function</CModalHeader>
+        <CModalHeader closeButton>Register deviceType of IoT Watson Platform</CModalHeader>
         <CModalBody>
           <CLabel>Type ID</CLabel>
           <CInput placeholder='Please enter Type ID' onChange={(e) => setTypeId(e.target.value)} />
@@ -233,7 +233,7 @@ export default function WatsonDeviceType() {
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Register Device</CModalHeader>
+        <CModalHeader closeButton>Add Function</CModalHeader>
         <CModalBody>
           <CLabel>Select Function</CLabel>
           <CSelect onChange={(e) => setFunc(e.target.value)}>

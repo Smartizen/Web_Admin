@@ -124,7 +124,7 @@ export default function SmartizenDevices() {
           />
 
           <CLabel>Host</CLabel>
-          <CInput placeholder='Please enter deviceId' onChange={(e) => setHost(e.target.value)} />
+          <CInput placeholder='Please enter host' onChange={(e) => setHost(e.target.value)} />
 
           <CLabel>Description</CLabel>
           <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
