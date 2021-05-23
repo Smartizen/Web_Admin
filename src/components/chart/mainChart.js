@@ -1,26 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CChartLine } from '@coreui/react-chartjs';
 import { getStyle, hexToRgba } from '@coreui/utils';
 
-const brandSuccess = getStyle('success') || '#4dbd74';
 const brandInfo = getStyle('info') || '#20a8d8';
-const brandDanger = getStyle('danger') || '#f86c6b';
 
 const MainChart = (attributes) => {
-  const random = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
+  const [label, setLabel] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
+
+  useEffect(() => {
+    function countUser() {
+      let datalabel = [];
+      datalabel = label.map((lb) => 0);
+      attributes.data.rows.forEach((data) => {
+        datalabel[new Date(data.created_at).getDate() - 1] += 1;
+      });
+      return datalabel;
+    }
+    const getLabel = () => {
+      let current = new Date(attributes.data.rows[0].created_at);
+      setLabel(getDaysInMonth(current.getMonth(), current.getFullYear()));
+      setDataUser(countUser());
+    };
+    if (attributes.data) getLabel();
+  }, [attributes]);
 
   const defaultDatasets = (() => {
-    let elements = 27;
-    const data1 = [];
-    const data2 = [];
-    const data3 = [];
-    for (let i = 0; i <= elements; i++) {
-      data1.push(random(50, 200));
-      data2.push(random(80, 100));
-      data3.push(65);
+    let data1 = [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ];
+
+    if (attributes.data) {
+      data1 = dataUser;
     }
+
     return [
       {
         label: 'My First dataset',
@@ -29,23 +72,6 @@ const MainChart = (attributes) => {
         pointHoverBackgroundColor: brandInfo,
         borderWidth: 2,
         data: data1,
-      },
-      {
-        label: 'My Second dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandSuccess,
-        pointHoverBackgroundColor: brandSuccess,
-        borderWidth: 2,
-        data: data2,
-      },
-      {
-        label: 'My Third dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandDanger,
-        pointHoverBackgroundColor: brandDanger,
-        borderWidth: 1,
-        borderDash: [8, 5],
-        data: data3,
       },
     ];
   })();
@@ -69,8 +95,8 @@ const MainChart = (attributes) => {
             ticks: {
               beginAtZero: true,
               maxTicksLimit: 5,
-              stepSize: Math.ceil(250 / 5),
-              max: 250,
+              stepSize: Math.ceil(16 / 5),
+              max: 16,
             },
             gridLines: {
               display: true,
@@ -89,43 +115,28 @@ const MainChart = (attributes) => {
     };
   })();
 
+  function getDaysInMonth(month, year) {
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+      days.push(
+        new Date(date).getDate().toString() + '/' + (new Date(date).getMonth() + 1).toString()
+      );
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
+  }
+
   // render
   return (
-    <CChartLine
-      {...attributes}
-      datasets={defaultDatasets}
-      options={defaultOptions}
-      labels={[
-        'Mo',
-        'Tu',
-        'We',
-        'Th',
-        'Fr',
-        'Sa',
-        'Su',
-        'Mo',
-        'Tu',
-        'We',
-        'Th',
-        'Fr',
-        'Sa',
-        'Su',
-        'Mo',
-        'Tu',
-        'We',
-        'Th',
-        'Fr',
-        'Sa',
-        'Su',
-        'Mo',
-        'Tu',
-        'We',
-        'Th',
-        'Fr',
-        'Sa',
-        'Su',
-      ]}
-    />
+    <>
+      <CChartLine
+        {...attributes}
+        datasets={defaultDatasets}
+        options={defaultOptions}
+        labels={label}
+      />
+    </>
   );
 };
 

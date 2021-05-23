@@ -37,7 +37,7 @@ const TheContent = () => {
               );
             })}
           </Switch>
-          {user ? <Redirect from='/' to='/dashboard' /> : <></>}
+          {user ? <Redirect from='/' to='/users' /> : <></>}
         </Suspense>
       </CContainer>
     </main>
