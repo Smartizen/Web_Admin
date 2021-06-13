@@ -22,7 +22,7 @@ const MainChart = (attributes) => {
       setLabel(getDaysInMonth(current.getMonth(), current.getFullYear()));
       setDataUser(countUser());
     };
-    if (attributes.data) getLabel();
+    if (attributes.data && attributes.data.rows.length > 0) getLabel();
   }, [attributes]);
 
   const defaultDatasets = (() => {
