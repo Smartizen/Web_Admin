@@ -128,9 +128,9 @@ export default function SmartizenDeviceType() {
       <CCol xs='12' lg='12'>
         <CCard>
           <CCardHeader className='between'>
-            <strong>Smartizen Platform Device Type</strong>
+            <strong>Bảng các loại thiết bị trên Smartizen Platform</strong>
             <CButton color='success' onClick={newToggle}>
-              Add new Device Type
+              Thêm loại thiết bị
             </CButton>
           </CCardHeader>
           <CCardBody>
@@ -147,7 +147,7 @@ export default function SmartizenDeviceType() {
                   <>
                     <td>
                       <CButton block shape='pill' className='btn-sm' color='danger'>
-                        Delete
+                        Xóa
                       </CButton>
                     </td>
                   </>
@@ -164,7 +164,7 @@ export default function SmartizenDeviceType() {
                           toggleDetails(index, item.typeId);
                         }}
                       >
-                        Feature
+                        Tính năng
                       </CButton>
                     </td>
                   </>
@@ -174,7 +174,7 @@ export default function SmartizenDeviceType() {
                     <CCollapse show={details.includes(index)}>
                       <CCardBody>
                         <CButton style={{ marginBottom: 10 }} color='success' onClick={toggle}>
-                          Add new Device
+                          Thêm chức năng
                         </CButton>
                         <CDataTable
                           items={features}
@@ -195,7 +195,7 @@ export default function SmartizenDeviceType() {
                                     color='danger'
                                     onClick={() => deleteCommand(item.Feature.id)}
                                   >
-                                    Delete
+                                    Xóa
                                   </CButton>
                                 </td>
                               </>
@@ -214,29 +214,32 @@ export default function SmartizenDeviceType() {
 
       {/* Modal */}
       <CModal show={newModal} onClose={newToggle}>
-        <CModalHeader closeButton>Register DeviceType of Smartizen platform</CModalHeader>
+        <CModalHeader closeButton>Thêm loại thiết bị</CModalHeader>
         <CModalBody>
           <CLabel>Type ID</CLabel>
-          <CInput placeholder='Please enter Type ID' onChange={(e) => setTypeId(e.target.value)} />
+          <CInput placeholder='Hãy nhập Type ID' onChange={(e) => setTypeId(e.target.value)} />
 
-          <CLabel>Description</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setNewDescription(e.target.value)} />
+          <CLabel>Mô tả</CLabel>
+          <CInput
+            placeholder='Hãy thêm mô tả'
+            onChange={(e) => setNewDescription(e.target.value)}
+          />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => addDeviceType()}>
-            Submit
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={newToggle}>
-            Cancel
+            Hủy
           </CButton>
         </CModalFooter>
       </CModal>
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Add Function</CModalHeader>
+        <CModalHeader closeButton>Thêm chức năng</CModalHeader>
         <CModalBody>
-          <CLabel>Select Function</CLabel>
+          <CLabel>Chọn chức năng</CLabel>
           <CSelect onChange={(e) => setFunc(e.target.value)}>
             {functions.map((funs, index) => (
               <option key={index} value={funs.id}>
@@ -247,10 +250,10 @@ export default function SmartizenDeviceType() {
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => addFunction()}>
-            Add
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={toggle}>
-            Cancel
+            Thoát
           </CButton>
         </CModalFooter>
       </CModal>

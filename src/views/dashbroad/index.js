@@ -49,7 +49,7 @@ export default function Dashboard() {
           <CRow>
             <CCol sm='5'>
               <h4 id='traffic' className='card-title mb-0'>
-                Traffic
+                Thống kê số lượng người dùng
               </h4>
             </CCol>
             <CCol sm='7' className='d-none d-md-block'>
@@ -57,12 +57,12 @@ export default function Dashboard() {
                 <CIcon name='cil-cloud-download' />
               </CButton>
               <CButtonGroup className='float-right mr-3'>
-                {['Month'].map((value) => (
+                {['Tháng'].map((value) => (
                   <CButton
                     color='outline-secondary'
                     key={value}
                     className='mx-0'
-                    active={value === 'Month'}
+                    active={value === 'Tháng'}
                   >
                     {value}
                   </CButton>
@@ -75,12 +75,12 @@ export default function Dashboard() {
         <CCardFooter>
           <CRow className='text-center'>
             <CCol md sm='12' className='mb-sm-2 mb-0'>
-              <div className='text-muted'>New User in Day</div>
-              <strong>{inDay.count} Users</strong>
+              <div className='text-muted'>Người dùng mới trong ngày</div>
+              <strong>{inDay.count} Người dùng</strong>
             </CCol>
             <CCol md sm='12' className='mb-sm-2 mb-0 d-md-down-none'>
-              <div className='text-muted'>New User in Month</div>
-              <strong>{inMonth.count} Users</strong>
+              <div className='text-muted'>Người dùng mới trong tháng</div>
+              <strong>{inMonth.count} Người dùng</strong>
             </CCol>
           </CRow>
         </CCardFooter>
@@ -91,7 +91,7 @@ export default function Dashboard() {
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>User details</CCardHeader>
+            <CCardHeader>Bảng chi tiết thông tin của người dùng</CCardHeader>
             <CCardBody>
               <CRow>
                 <CCol xs='12' md='12' xl='12'>
@@ -114,7 +114,7 @@ export default function Dashboard() {
                               color='danger'
                               onClick={() => deleteUser(user)}
                             >
-                              Delete
+                              Xóa
                             </CButton>
                           </td>
                         </>

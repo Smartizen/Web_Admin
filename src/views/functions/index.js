@@ -91,9 +91,9 @@ export default function Functions() {
       <CCol xs='12' lg='12'>
         <CCard>
           <CCardHeader className='between'>
-            <strong>Function Table</strong>
+            <strong>Bảng tổng hợp các chức năng</strong>
             <CButton color='success' onClick={toggle}>
-              Add new Function
+              Thêm chức năng
             </CButton>
           </CCardHeader>
 
@@ -117,7 +117,7 @@ export default function Functions() {
                         color='primary'
                         onClick={() => updateToggle(device)}
                       >
-                        Update
+                        Cập nhật
                       </CButton>
                     </td>
                     <td>
@@ -128,7 +128,7 @@ export default function Functions() {
                         color='danger'
                         onClick={() => deleteFunction(device)}
                       >
-                        Delete
+                        Xóa
                       </CButton>
                     </td>
                   </>
@@ -141,60 +141,60 @@ export default function Functions() {
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Add Function</CModalHeader>
+        <CModalHeader closeButton>Thêm chức năng</CModalHeader>
         <CModalBody>
-          <CLabel>Name</CLabel>
-          <CInput
-            placeholder='Please enter name function'
-            onChange={(e) => setName(e.target.value)}
-          />
+          <CLabel>Tên</CLabel>
+          <CInput placeholder='Hãy điền tên chức năng' onChange={(e) => setName(e.target.value)} />
 
           <CLabel>Command</CLabel>
-          <CInput placeholder='Command ( Optional )' onChange={(e) => setCommand(e.target.value)} />
+          <CInput placeholder='Command ( Tùy chọn )' onChange={(e) => setCommand(e.target.value)} />
 
-          <CLabel>Description</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
+          <CLabel>Mô tả</CLabel>
+          <CInput
+            placeholder='Hãy điền mô tả chức năng'
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => addFunction()}>
-            Submit
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={toggle}>
-            Cancel
+            Thoát
           </CButton>
         </CModalFooter>
       </CModal>
 
       <CModal show={updateModal} onClose={() => setUpdateModal()}>
-        <CModalHeader closeButton>Update Function</CModalHeader>
+        <CModalHeader closeButton>Cập nhật chức năng</CModalHeader>
         <CModalBody>
-          <CLabel>Name</CLabel>
+          <CLabel>Tên</CLabel>
           <CInput
-            placeholder='Change Name'
+            placeholder='Cập nhật tên'
             defaultValue={name}
             onChange={(e) => setName(e.target.value)}
           />
 
           <CLabel>Command</CLabel>
           <CInput
-            placeholder='Change Command'
+            placeholder='Cập nhật Command'
             defaultValue={command}
             onChange={(e) => setCommand(e.target.value)}
           />
 
-          <CLabel>Description</CLabel>
+          <CLabel>Mô tả</CLabel>
           <CInput
-            placeholder='Change Description'
+            placeholder='Cập nhật mô tả'
             defaultValue={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => updateFunction()}>
-            Update
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={updateToggle}>
-            Cancel
+            Xóa
           </CButton>
         </CModalFooter>
       </CModal>

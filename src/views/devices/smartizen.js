@@ -62,9 +62,9 @@ export default function SmartizenDevices() {
       <CCol xs='12' lg='12'>
         <CCard>
           <CCardHeader className='between'>
-            <strong>Smartizen Device Table</strong>
+            <strong>Bảng thiết bị trên Smartizen Platform</strong>
             <CButton color='success' onClick={toggle}>
-              Add new Device
+              Thêm thiết bị
             </CButton>
           </CCardHeader>
 
@@ -82,7 +82,7 @@ export default function SmartizenDevices() {
                   <>
                     <td>
                       <CButton block shape='pill' className='btn-sm' color='primary'>
-                        Update
+                        Cập nhật
                       </CButton>
                     </td>
                     <td>
@@ -93,7 +93,7 @@ export default function SmartizenDevices() {
                         color='danger'
                         onClick={() => deleteDevice(device)}
                       >
-                        Delete
+                        Xóa
                       </CButton>
                     </td>
                   </>
@@ -106,9 +106,9 @@ export default function SmartizenDevices() {
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Register Device</CModalHeader>
+        <CModalHeader closeButton>Đăng ký thiết bị</CModalHeader>
         <CModalBody>
-          <CLabel>Type Id</CLabel>
+          <CLabel>Chọn loại thiết bị</CLabel>
           <CSelect onChange={(e) => setTypeId(e.target.value)}>
             {smartizenDeviceType.map((type, index) => (
               <option key={index} value={type.typeId}>
@@ -117,24 +117,24 @@ export default function SmartizenDevices() {
             ))}
           </CSelect>
 
-          <CLabel>Device Id</CLabel>
-          <CInput
-            placeholder='Please enter deviceId'
-            onChange={(e) => setDeviceId(e.target.value)}
-          />
+          <CLabel>Nhập Device Id</CLabel>
+          <CInput placeholder='Hãy nhập device Id' onChange={(e) => setDeviceId(e.target.value)} />
 
           <CLabel>Host</CLabel>
-          <CInput placeholder='Please enter host' onChange={(e) => setHost(e.target.value)} />
+          <CInput placeholder='Hãy nhập host' onChange={(e) => setHost(e.target.value)} />
 
-          <CLabel>Description</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
+          <CLabel>Mô tả</CLabel>
+          <CInput
+            placeholder='Hãy nhập mô tả thiết bị'
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => registerDevice()}>
-            Register
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={toggle}>
-            Cancel
+            Thoát
           </CButton>
         </CModalFooter>
       </CModal>

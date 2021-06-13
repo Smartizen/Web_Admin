@@ -61,9 +61,9 @@ export default function WatsonDevices() {
       <CCol xs='12' lg='12'>
         <CCard>
           <CCardHeader className='between'>
-            <strong>Watson Device Table</strong>
+            <strong>Bảng thiết bị trên IBM IoT Watson</strong>
             <CButton color='success' onClick={toggle}>
-              Add new Device
+              Thêm thiết bị
             </CButton>
           </CCardHeader>
 
@@ -81,7 +81,7 @@ export default function WatsonDevices() {
                   <>
                     <td>
                       <CButton block shape='pill' className='btn-sm' color='primary'>
-                        Update
+                        Cập nhật
                       </CButton>
                     </td>
                     <td>
@@ -92,7 +92,7 @@ export default function WatsonDevices() {
                         color='danger'
                         onClick={() => deleteDevice(device)}
                       >
-                        Delete
+                        Xóa
                       </CButton>
                     </td>
                   </>
@@ -105,9 +105,9 @@ export default function WatsonDevices() {
 
       {/* Modal */}
       <CModal show={modal} onClose={toggle}>
-        <CModalHeader closeButton>Register Device</CModalHeader>
+        <CModalHeader closeButton>Thêm thiết bị</CModalHeader>
         <CModalBody>
-          <CLabel>Type Id</CLabel>
+          <CLabel>Chọn loại thiết bị</CLabel>
           <CSelect onChange={(e) => setTypeId(e.target.value)}>
             {watsonDeviceType.map((type, index) => (
               <option key={index} value={type.typeId}>
@@ -117,20 +117,20 @@ export default function WatsonDevices() {
           </CSelect>
 
           <CLabel>Device Id</CLabel>
-          <CInput
-            placeholder='Please enter deviceId'
-            onChange={(e) => setDeviceId(e.target.value)}
-          />
+          <CInput placeholder='Hãy nhập device Id' onChange={(e) => setDeviceId(e.target.value)} />
 
-          <CLabel>Description</CLabel>
-          <CInput placeholder='Description' onChange={(e) => setDescription(e.target.value)} />
+          <CLabel>Mô tả</CLabel>
+          <CInput
+            placeholder='Thêm mô tả thiết bị'
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </CModalBody>
         <CModalFooter>
           <CButton color='primary' onClick={() => registerDevice()}>
-            Register
+            Gửi
           </CButton>
           <CButton color='secondary' onClick={toggle}>
-            Cancel
+            Xóa
           </CButton>
         </CModalFooter>
       </CModal>
