@@ -122,6 +122,15 @@ export default function WatsonDeviceType() {
     }
   };
 
+  const deleteDeviceType = async (item) => {
+    try {
+      await axiosClient.delete(`/device-type/${item.id}`);
+      getDevice();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <CCol xs='12' lg='12'>
@@ -145,7 +154,15 @@ export default function WatsonDeviceType() {
                 Action: (item) => (
                   <>
                     <td>
-                      <CButton block shape='pill' className='btn-sm' color='danger'>
+                      <CButton
+                        block
+                        shape='pill'
+                        className='btn-sm'
+                        color='danger'
+                        onClick={() => {
+                          deleteDeviceType(item);
+                        }}
+                      >
                         Xóa
                       </CButton>
                     </td>

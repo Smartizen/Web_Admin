@@ -53,7 +53,8 @@ export default function SmartizenDevices() {
   };
 
   const deleteDevice = async ({ typeId, deviceId }) => {
-    await axiosClient.delete(`/device/smartizen/${typeId}/${deviceId}`);
+    let isdelete = await axiosClient.delete(`/device/smartizen/${typeId}/${deviceId}`);
+    console.log(isdelete);
     getDevice();
   };
 
